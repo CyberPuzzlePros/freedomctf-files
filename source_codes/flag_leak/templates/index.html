@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phalerovia Talk</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #2e3440;
+        color: #81a1c1;
+      }
+
+      h1 {
+        width: 100%;
+        text-align: center;
+      }
+      .welcome-page {
+        height: fit-content;
+        position: absolute;
+        top: 80%;
+        overflow-x: hidden;
+      }
+      .AOT-button {
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        width: 20%;
+        justify-content: space-around;
+      }
+
+      button {
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        background-color: rgb(46, 52, 64);
+        transition: box-shadow 0.4s ease-in-out 0s,
+          background-color 0.4s ease-in-out 0s;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        color: #81a1c1;
+        margin-top: 30px;
+        width: 40%;
+      }
+
+      .welcome-page-image {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-30%, -30%);
+      }
+      button:hover {
+        background-color: #3b4252ed;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="../static/Black_Phalerovia_Logo.png" class="welcome-page-image" />
+    <h1 class="welcome-page">Phalerovia Talk</h1>
+    <div class="AOT-button">
+      <button onclick="location.assign('/login')">Login</button>
+      <button onclick="location.assign('/register')">Register</button>
+    </div>
+  </body>
+</html>
