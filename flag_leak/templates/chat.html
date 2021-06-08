@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phalerovia Talk</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <style>
+      * {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #2e3440;
+        color: #81a1c1;
+      }
+
+      h1 {
+        width: 100%;
+        text-align: center;
+      }
+      button {
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        background-color: rgb(46, 52, 64);
+        transition: box-shadow 0.4s ease-in-out 0s,
+          background-color 0.4s ease-in-out 0s;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        color: #81a1c1;
+        /* margin-top: 30px; */
+        width: 40%;
+      }
+
+      button:hover {
+        background-color: #3b4252ed;
+      }
+      .login-form {
+        width: 30%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #434c5e;
+        padding: 2em;
+        border-radius: 8px;
+        transition: box-shadow 0.4s ease-in-out 0s,
+          background-color 0.4s ease-in-out 0s;
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        color: white;
+      }
+      .login-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px auto;
+      }
+      .login-form button {
+        margin: 3% 0px 2% 30%;
+      }
+      .login-group input {
+        background-color: rgb(46, 52, 64);
+
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        border-radius: 3px;
+        border: none;
+        padding: 5px;
+        font-size: 15px;
+        color: #81a1c1;
+      }
+      .login-page {
+        position: absolute;
+        top: 20%;
+      }
+
+      .container {
+        position: absolute;
+        width: 80%;
+        height: 85%;
+        display: flex;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .users {
+        flex: 25%;
+        background-color: #3b4252;
+        padding: 20px;
+      }
+
+      .user-group {
+        display: flex;
+        align-items: center;
+      }
+      .user-group img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+      .chat {
+        flex: 75%;
+        display: flex;
+        flex-direction: column;
+        background-color: #434c5e;
+        padding: 20px;
+      }
+      .messages {
+        flex: 80%;
+        overflow-y: scroll;
+      }
+      .text-box {
+        display: flex;
+        align-items: center;
+      }
+      .message-text {
+        width: 90%;
+        flex: 95%;
+        margin: 0 15px 0 0;
+        background-color: rgb(46, 52, 64);
+
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        border-radius: 3px;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        color: #81a1c1;
+      }
+      .text-box button {
+        flex: 5%;
+        margin: 0;
+      }
+
+      .sent {
+        display: flex;
+        align-items: center;
+        background-color: #3b4252;
+        padding: 10px;
+        margin:10px 0;
+      }
+      .recieved {
+        display: flex;
+        align-items: center;
+        background-color: #2e3440;
+        padding: 10px;
+      }
+      .avatar {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+      .username-img {
+        max-width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 10px;
+        margin: 0 15px 0 0;
+      }
+      .search-form{
+        margin: 10px auto 0 auto;
+        width:80%;
+        display: flex;
+      }
+      .search-button{
+        margin:0;
+      }
+      .search-bar{
+        width: 90%;
+        flex: 95%;
+        margin: 0 15px 0 0;
+        background-color: rgb(46, 52, 64);
+
+        box-shadow: rgba(15, 17, 21, 0.35) 0px 6px 9px 0px;
+        border-radius: 3px;
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        color: #81a1c1;
+      }
+      .date{
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="search-form" action="/create-channel" method="POST">
+    <input type="search" name="username" class="search-bar" placeholder="Enter username to start chatting">
+    <button type="submit" class="search-button">Start Chat</button>
+    </form>
+    <div class="container">
+      
+      <div class="users">
+        {% for user in users %}
+        {% if not user[0] == session['username'] %}
+        <div class="user-group" id={{user[0]}}>
+          <img src="../static/Black_Phalerovia_Logo.png" id={{user[0]}}/>
+          <div id={{user[1]}} class='username'>{{user[0]}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="chat">
+        <div class="messages">
+            <div class="message">
+              
+          </div>
+        <span id="scroll" style="height: 5px;"></span>
+        </div>
+
+        <form id = 'message-form'>
+        <div class="text-box">
+            
+            <input
+            type="text"
+            name="text"
+            placeholder="Enter your message"
+            class="message-text"
+            required
+          /><button type="submit">Send</button></form>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+        var socket = io.connect('https://'+ document.domain+':'+location.port);
+        var room = '';
+        socket.on('connect', function(){
+            socket.emit('open',{
+                message:'User-Connected'
+            })
+            var form = $('#message-form').on('submit', function(e){
+                e.preventDefault();
+                let message = $('input.message-text').val();
+                if( room !== ''){
+                socket.emit('send', {
+                    message: message,
+                    room: room,
+                })
+              }
+                $('input.message-text').val('').focus()
+            })
+        })
+        socket.on('my response', function(msg){
+            if(typeof msg.message !== undefined){
+                console.log('messageRecived')
+                $('.message').append('<div class="sent"><div class="username-img"><img src="../static/Black_Phalerovia_Logo.png" class="avatar" alt=""/>'+msg.user+'</div><div class="sent-text">'+msg.message+'</div></div>');
+                document.getElementById('scroll').scrollIntoView();
+            }
+        })
+
+        if (room === ''){
+          $('.message-text').attr('dissable');
+        }
+
+        $('.username').click((e)=>{
+          $.get('/open-channel/'+e.target.id, function(data){
+            data.forEach((msg)=>{
+            $('.message').append('<div class="sent"><div class="username-img"><span class="date">'+msg.date+'</span><img src="../static/Black_Phalerovia_Logo.png" class="avatar" alt=""/>'+msg.username+'</div><div class="sent-text">'+msg.message+'</div></div>');
+          })
+            document.getElementById('scroll').scrollIntoView();
+          })
+          socket.emit('join',{
+            room: e.target.id,
+          })
+          room= e.target.id;
+          $('.message').empty();
+        })
+
+    </script>
+  </body>
+</html>
