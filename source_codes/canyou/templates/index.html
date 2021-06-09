@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Description" content="Login Form " />
+    <title>Sine</title>
+    <style>
+      /* SINE */
+
+      #canvas6 {
+        z-index: -1;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+      .loginForm {
+        /* visibility: hidden;
+        display: none; */
+        background-color: rgb(15 17 18 / 90%);
+        box-shadow: 0px 4px 11px 2px rgb(0 0 0 / 50%);
+        border-radius: 5px;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        text-decoration: none;
+        position: absolute;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 400px;
+        max-height: 300px;
+        z-index: 100;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+
+      .loginForm > input {
+        outline: none;
+        background-color: #1e252b;
+        border: none;
+        color: #6c7379;
+        width: 90%;
+        padding: 12.8px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        transition: border-color 0.1s ease-in-out 0s, color 0.4s ease-in-out 0s,
+          background-color 0.4s ease-in-out 0s;
+      }
+      .loginForm h1 {
+        background: none !important;
+        margin: 0 0 24px 0;
+      }
+
+      .loginForm > button {
+        background-color: #f2615d;
+        color: black;
+        padding: 6px 16px;
+        font-size: 0.875rem;
+        min-width: 64px;
+        box-sizing: border-box;
+        transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+          box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+          border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: 500;
+        line-height: 1.75;
+        border-radius: 4px;
+        letter-spacing: 0.02857em;
+        text-transform: uppercase;
+        border: 0;
+        cursor: pointer;
+        display: inline-flex;
+        position: relative;
+        align-items: center;
+        vertical-align: middle;
+        user-select: none;
+        justify-content: center;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+      }
+      .error{
+        color:#ac3d39;
+      }
+      .loginForm > button:hover {
+        background-color: #ac3d39;
+        box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+          0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      body {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas6"></canvas>
+    <div>
+      {% block content%}
+      <form class="loginForm" action="/login" method="POST">
+        <h1>Login</h1>
+        <input type="text" placeholder="Username" id="username" name="username" required />
+        <input type="password" placeholder="Password" id="Password" name="password" required />
+        <button type="submit">SIGN IN</button>
+        <div class="error">{{error}}</div>
+        
+      </form>
+      {% endblock %}
+    </div>
+  </body>
+  <script src="../static/Fire.js"></script>
+  <script src="../static/Sine.js"></script>
+</html>
