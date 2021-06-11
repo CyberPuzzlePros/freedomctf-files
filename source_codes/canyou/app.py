@@ -37,7 +37,7 @@ def login():
         if filte[0]:
             print("SQL injection detected")
             return render_template("index.html", error="SQL injection Deteced: "+filte[1])
-        query = f"SELECT * FROM user WHERE username='' and password='{request.form['password']}'"
+        query = f"SELECT * FROM user WHERE username='{request.form['username']}' and password='{request.form['password']}'"
         print(query)
         rows = cursor.execute(query)
         user = rows.fetchone()
